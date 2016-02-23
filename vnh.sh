@@ -11,6 +11,15 @@ do
         esac
 done
 valid=0
+while [ $valid -lt 1 ]
+do
+        read -p 'Restart node apps? (y/n):... ' choice
+        case "$choice" in
+        y|Y ) ls /etc/init | grep nodejs | cut -d. -f1 | for service in `xargs`; do sudo stop ${service}; sudo start ${service}; done; echo -e "\e[38;5;222m Done."; valid=1;;
+        n|N ) valid=1;;
+        esac
+done
+valid=0
 nav=0
 while [ $valid -lt 1 ]
 do
